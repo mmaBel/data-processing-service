@@ -32,7 +32,7 @@ import java.util.concurrent.*;
 public class RabbitMessageDispatcher implements Closeable
 {
     private static final Logger LOG = LoggerFactory.getLogger(RabbitMessageDispatcher.class);
-    private static final Codec codec = new JsonCodec();
+    private static final Codec codec = new JsonLzfCodec();
     private Channel channel;
     private Connection conn;
     private String outputQueueName;

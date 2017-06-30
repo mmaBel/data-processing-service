@@ -20,10 +20,10 @@ import com.github.cafdataprocessing.worker.policy.handlers.shared.document.Share
 import com.hpe.caf.api.Codec;
 import com.hpe.caf.api.CodecException;
 import com.hpe.caf.api.worker.*;
-import com.hpe.caf.codec.JsonCodec;
 import com.github.cafdataprocessing.utilities.taskreceiver.services.Services;
 import com.github.cafdataprocessing.utilities.taskreceiver.taskmessage.TaskMessageWriter;
 import com.github.cafdataprocessing.utilities.taskreceiver.taskoutput.FileNameHelper;
+import com.hpe.caf.codec.JsonLzfCodec;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
@@ -167,7 +167,7 @@ public class TaskMessageWriterTest {
         TaskMessageWriter writer = new TaskMessageWriter(
                 outputDir, dataStore, mockedOutputHelper.getOutputHelper(), saveTaskDataOnly, cleanDataStoreAfterProcessing);
         String expectedOutputData = "This is the output message expected.";
-        Codec codec = new JsonCodec();
+        Codec codec = new JsonLzfCodec();
         TaskMessage message = TestTaskMessageBuilder.buildTaskMessage(codec.serialise(expectedOutputData));
         writer.writeMessage(message);
 
@@ -197,7 +197,7 @@ public class TaskMessageWriterTest {
         TaskMessageWriter writer = new TaskMessageWriter(
                 outputDir, dataStore, mockedOutputHelper.getOutputHelper(), saveTaskDataOnly, cleanDataStoreAfterProcessing);
         String expectedOutputData = "This is the output message expected.";
-        Codec codec = new JsonCodec();
+        Codec codec = new JsonLzfCodec();
         TaskMessage message = TestTaskMessageBuilder.buildTaskMessage(codec.serialise(expectedOutputData));
         writer.writeMessage(message);
 

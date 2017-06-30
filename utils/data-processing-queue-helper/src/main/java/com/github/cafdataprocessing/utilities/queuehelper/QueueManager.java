@@ -19,7 +19,7 @@ import com.google.common.base.Strings;
 import com.hpe.caf.api.Codec;
 import com.hpe.caf.api.CodecException;
 import com.hpe.caf.api.worker.TaskMessage;
-import com.hpe.caf.codec.JsonCodec;
+import com.hpe.caf.codec.JsonLzfCodec;
 import com.hpe.caf.configs.RabbitConfiguration;
 import com.hpe.caf.util.rabbitmq.DefaultRabbitConsumer;
 import com.hpe.caf.util.rabbitmq.Event;
@@ -61,7 +61,7 @@ public class QueueManager implements Closeable {
     private final List<String> consumeQueues;
     private final MessageHandler messageHandler = new MessageHandler();
 
-    private final Codec codec = new JsonCodec();
+    private final Codec codec = new JsonLzfCodec();
 
     /**
      * Constructs or returns the QueueManager instance
