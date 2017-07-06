@@ -56,6 +56,7 @@
 
     <modules>
         <module>data-processing-databases-container</module>
+        <module>data-processing-enrichment-databases-container</module>
         <module>data-processing-queue-helper</module>
         <module>data-processing-task-receiver</module>
         <module>data-processing-task-receiver-container</module>
