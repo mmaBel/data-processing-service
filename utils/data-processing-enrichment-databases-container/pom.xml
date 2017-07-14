@@ -73,6 +73,11 @@
         </dependency>
         <dependency>
             <groupId>com.github.cafdataprocessing</groupId>
+            <artifactId>composite-document-handler</artifactId>
+            <version>${caf.worker.policy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cafdataprocessing</groupId>
             <artifactId>worker-policy-type-registrant</artifactId>
         </dependency>
     </dependencies>
