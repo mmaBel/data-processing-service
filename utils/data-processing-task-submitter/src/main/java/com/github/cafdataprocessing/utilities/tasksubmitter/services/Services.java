@@ -19,9 +19,9 @@ import com.github.cafdataprocessing.utilities.queuehelper.RabbitProperties;
 import com.github.cafdataprocessing.utilities.queuehelper.RabbitServices;
 import com.hpe.caf.api.Codec;
 import com.hpe.caf.api.worker.ManagedDataStore;
-import com.hpe.caf.codec.JsonCodec;
 import com.github.cafdataprocessing.utilities.tasksubmitter.properties.StorageProperties;
 import com.github.cafdataprocessing.utilities.tasksubmitter.properties.TaskSubmitterProperties;
+import com.hpe.caf.codec.JsonLzfCodec;
 import com.hpe.caf.worker.datastore.fs.FileSystemDataStoreConfiguration;
 import com.hpe.caf.worker.queue.rabbit.RabbitWorkerQueueConfiguration;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -52,7 +52,7 @@ public class Services {
     }
 
     public Codec getCodec(){
-        return new JsonCodec();
+        return new JsonLzfCodec();
     }
 
     public RabbitProperties getRabbitProperties(){

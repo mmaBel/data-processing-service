@@ -26,7 +26,7 @@ import com.hpe.caf.api.Codec;
 import com.hpe.caf.api.CodecException;
 import com.hpe.caf.api.worker.DataStoreException;
 import com.hpe.caf.api.worker.TaskMessage;
-import com.hpe.caf.codec.JsonCodec;
+import com.hpe.caf.codec.JsonLzfCodec;
 import com.hpe.caf.util.rabbitmq.DefaultRabbitConsumer;
 import com.hpe.caf.util.rabbitmq.Event;
 import com.hpe.caf.util.rabbitmq.QueueConsumer;
@@ -47,7 +47,7 @@ import java.util.concurrent.*;
  * Tests that the task submitter application successfully submits tasks to a RabbitMQ queue with expected information.
  */
 public class MainIT {
-    private static final Codec codec = new JsonCodec();
+    private static final Codec codec = new JsonLzfCodec();
     private List<String> consumerTags;
     private Thread consumerThread;
 

@@ -22,7 +22,8 @@ import com.hpe.caf.api.Codec;
 import com.hpe.caf.api.CodecException;
 import com.hpe.caf.api.worker.TaskMessage;
 import com.hpe.caf.api.worker.TaskStatus;
-import com.hpe.caf.codec.JsonCodec;
+import com.hpe.caf.codec.JsonLzfCodec;
+
 import java.util.Collections;
 
 /**
@@ -30,7 +31,7 @@ import java.util.Collections;
  */
 public class Message
 {
-    private static final Codec codec = new JsonCodec();
+    private static final Codec codec = new JsonLzfCodec();
     private final Document document;
     private final String outputQueueName;
 
