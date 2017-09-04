@@ -22,6 +22,8 @@ var promiseHelper = require('../../helpers/httpPromiseHelper.js');
 var pagingHelper = require('../../helpers/pagingHelper.js');
 var apiErrorFactory = require('../errors/apiErrorFactory.js');
 
+var policyDatabase = require('../../db/policyDatabase.js');
+
 module.exports = {
   create: create,
   delete: deleteType,
@@ -96,20 +98,7 @@ function deleteType(projectId, policyTypeId){
 }
 
 function get(projectId, policyTypeId){
-  //if this type is already in the cache then return it (wrapped in a promise)
-  var cachedType = policyTypeCache.get(buildCacheKey(projectId, policyTypeId));
-  if(cachedType!==undefined){
-    return Q(cachedType);
-  }
-  
-  var getPolicyTypeParams = getDefaultParams(projectId);
-  getPolicyTypeParams.id = policyTypeId;
-  
-  var getTypePromise = policyHttpHelper.genericPolicyAPIGetItemRequest("policy/retrieve", getPolicyTypeParams);
-  getTypePromise.then(function(returnedPolicyType){
-    policyTypeCache.set(buildCacheKey(projectId, policyTypeId), returnedPolicyType);
-  });
-  return getTypePromise;
+  return policyDatabase.getPolicyType(projectId, policyTypeId);
 }
 
 function getWithValidate(projectId, policyTypeId, noMatchMessage){
@@ -121,7 +110,7 @@ function getWithValidate(projectId, policyTypeId, noMatchMessage){
         validatedPromise.reject(apiErrorFactory.createNotFoundError(defaultNoMatchMessage + policyTypeId));
         return;
       }
-      validatedPromise.reject(apiErrorFactory.createNotFoundError(noMatchMessage + policyTypeId));
+      validatedPromise.reject(apiErrorFactory.createNotFoundError(noMatchMessage));
       return;
     }
     validatedPromise.resolve(retrievedType);
@@ -148,18 +137,7 @@ function getWithValidate(projectId, policyTypeId, noMatchMessage){
 
 function getTypes(projectId, pageNum, pageSize){
   var pageOptions = pagingHelper.getValidatedPagingParams(pageNum, pageSize);
-  var getTypesParams = getDefaultParams(projectId);
-  getTypesParams.max_page_results = pageOptions.pageSize;
-  getTypesParams.start = pageOptions.start;
-  
-  var getTypesPromise = policyHttpHelper.genericPolicyAPIGetItemsRequest("policy/retrieve", getTypesParams);
-  getTypesPromise.then(function(returnedPolicyTypes){
-    //add these retrieved entries to the cache
-    for(var returnedType of returnedPolicyTypes.results){
-      policyTypeCache.set(buildCacheKey(projectId, returnedType.id), returnedType);
-    }
-  });  
-  return getTypesPromise;
+  return policyDatabase.getPolicyTypes(projectId, pageOptions.start -1, pageOptions.pageSize);
 }
 
 function getTypesByIds(projectId, params){
@@ -205,3 +183,4 @@ function getTypesByIds(projectId, params){
   }).done();
   return deferredGetTypes.promise;
 }
+

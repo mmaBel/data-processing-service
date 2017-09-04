@@ -20,6 +20,7 @@ var logger = require('./api/helpers/loggingHelper.js');
 var appConfig = require('./api/helpers/dataProcessingServiceConfigHelper.js');
 var swaggerHelper = require('./api/helpers/swaggerHelper.js');
 var requestProcessing = require('./api/libs/requestProcessing.js');
+var policyDatabase = require('./api/db/policyDatabase.js');
 
 module.exports = app; // for testing
 
